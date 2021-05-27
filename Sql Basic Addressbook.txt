@@ -1,0 +1,165 @@
+mysql> use addressbookservice;
+Database changed
+mysql> show tables;
++------------------------------+
+| Tables_in_addressbookservice |
++------------------------------+
+| addressbook                  |
++------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from addressbook;
++-----------+----------+-------------------+----------+---------------+---------+-------------+--------------------------+
+| firstname | lastname | address           | city     | state         | zipcode | phonenumber | email                    |
++-----------+----------+-------------------+----------+---------------+---------+-------------+--------------------------+
+| Akash     | Rajput   | Skyline Apartment | Pune     | Maharastra    |  412307 |   879344781 | akashshevgan11@gmail.com |
+| Nitesh    | Dubey    | RT Road           | Banaras  | Utter Pradesh |  338877 |   954512917 | nitesh@gmail.com         |
+| Dinesh    | Singh    | N12 KP Road       | Amritsar | Panjab        |  307456 |   901187142 | Dinesh@gmail.com         |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra    |  412307 |   758804372 | sachin@gmail.com         |
+| Yogesh    | Shevgan  | Akoliwadgaon      | Gangapur | Maharastra    |  423701 |   901165307 | Yogesh44@gmail.com       |
+| Nitesh    | Dubey    | RT Road           | Banaras  | Utter Pradesh |  338877 |   954512917 | nitesh@gmail.com         |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra    |  412307 |   758804372 | sachin@gmail.com         |
++-----------+----------+-------------------+----------+---------------+---------+-------------+--------------------------+
+7 rows in set (0.00 sec)
+
+
+mysql> delete from addressbook where firstname = 'Nitesh';
+Query OK, 2 rows affected (0.03 sec)
+
+mysql> select * from addressbook;
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+
+| firstname | lastname | address           | city     | state      | zipcode | phonenumber | email                    |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+
+| Akash     | Rajput   | Skyline Apartment | Pune     | Maharastra |  412307 |   879344781 | akashshevgan11@gmail.com |
+| Dinesh    | Singh    | N12 KP Road       | Amritsar | Panjab     |  307456 |   901187142 | Dinesh@gmail.com         |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |
+| Yogesh    | Shevgan  | Akoliwadgaon      | Gangapur | Maharastra |  423701 |   901165307 | Yogesh44@gmail.com       |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from adddressbook where city = 'pune';
+ERROR 1146 (42S02): Table 'addressbookservice.adddressbook' doesn't exist
+mysql> select * from addressbook where city = 'pune';
++-----------+----------+-------------------+------+------------+---------+-------------+--------------------------+
+| firstname | lastname | address           | city | state      | zipcode | phonenumber | email                    |
++-----------+----------+-------------------+------+------------+---------+-------------+--------------------------+
+| Akash     | Rajput   | Skyline Apartment | Pune | Maharastra |  412307 |   879344781 | akashshevgan11@gmail.com |
++-----------+----------+-------------------+------+------------+---------+-------------+--------------------------+
+1 row in set (0.00 sec)
+
+
+mysql> select count(city) from addressbook;
++-------------+
+| count(city) |
++-------------+
+|           5 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select * from addressbook;
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+
+| firstname | lastname | address           | city     | state      | zipcode | phonenumber | email                    |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+
+| Akash     | Rajput   | Skyline Apartment | Pune     | Maharastra |  412307 |   879344781 | akashshevgan11@gmail.com |
+| Dinesh    | Singh    | N12 KP Road       | Amritsar | Panjab     |  307456 |   901187142 | Dinesh@gmail.com         |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |
+| Yogesh    | Shevgan  | Akoliwadgaon      | Gangapur | Maharastra |  423701 |   901165307 | Yogesh44@gmail.com       |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from addressbook where state = 'Maharastra' order by firstname asc;
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+
+| firstname | lastname | address           | city     | state      | zipcode | phonenumber | email                    |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+
+| Akash     | Rajput   | Skyline Apartment | Pune     | Maharastra |  412307 |   879344781 | akashshevgan11@gmail.com |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |
+| Yogesh    | Shevgan  | Akoliwadgaon      | Gangapur | Maharastra |  423701 |   901165307 | Yogesh44@gmail.com       |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+
+4 rows in set (0.01 sec)
+
+mysql> alter table addressbook add type varchar(150) not null after email;
+Query OK, 0 rows affected (0.12 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+------+
+| firstname | lastname | address           | city     | state      | zipcode | phonenumber | email                    | type |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+------+
+| Akash     | Rajput   | Skyline Apartment | Pune     | Maharastra |  412307 |   879344781 | akashshevgan11@gmail.com |      |
+| Dinesh    | Singh    | N12 KP Road       | Amritsar | Panjab     |  307456 |   901187142 | Dinesh@gmail.com         |      |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |      |
+| Yogesh    | Shevgan  | Akoliwadgaon      | Gangapur | Maharastra |  423701 |   901165307 | Yogesh44@gmail.com       |      |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |      |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+------+
+5 rows in set (0.00 sec)
+
+mysql> alter table addressbook add id int not null auto_increment primary key after email;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+----+------+
+| firstname | lastname | address           | city     | state      | zipcode | phonenumber | email                    | id | type |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+----+------+
+| Akash     | Rajput   | Skyline Apartment | Pune     | Maharastra |  412307 |   879344781 | akashshevgan11@gmail.com |  1 |      |
+| Dinesh    | Singh    | N12 KP Road       | Amritsar | Panjab     |  307456 |   901187142 | Dinesh@gmail.com         |  2 |      |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |  3 |      |
+| Yogesh    | Shevgan  | Akoliwadgaon      | Gangapur | Maharastra |  423701 |   901165307 | Yogesh44@gmail.com       |  4 |      |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |  5 |      |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+----+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from addressbook;
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+----+---------+
+| firstname | lastname | address           | city     | state      | zipcode | phonenumber | email                    | id | type    |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+----+---------+
+| Akash     | Rajput   | Skyline Apartment | Pune     | Maharastra |  412307 |   879344781 | akashshevgan11@gmail.com |  1 | friend  |
+| Dinesh    | Singh    | N12 KP Road       | Amritsar | Panjab     |  307456 |   901187142 | Dinesh@gmail.com         |  2 | school  |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |  3 | family  |
+| Yogesh    | Shevgan  | Akoliwadgaon      | Gangapur | Maharastra |  423701 |   901165307 | Yogesh44@gmail.com       |  4 | family  |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |  5 | college |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+----+---------+
+5 rows in set (0.00 sec)
+
+ysql> alter table addressbook add addressbook_name varchar(100) not null;
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from addressbook;
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+----+---------+------------------+
+| firstname | lastname | address           | city     | state      | zipcode | phonenumber | email                    | id | type    | addressbook_name |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+----+---------+------------------+
+| Akash     | Rajput   | Skyline Apartment | Pune     | Maharastra |  412307 |   879344781 | akashshevgan11@gmail.com |  1 | friend  |                  |
+| Dinesh    | Singh    | N12 KP Road       | Amritsar | Panjab     |  307456 |   901187142 | Dinesh@gmail.com         |  2 | school  |                  |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |  3 | family  |                  |
+| Yogesh    | Shevgan  | Akoliwadgaon      | Gangapur | Maharastra |  423701 |   901165307 | Yogesh44@gmail.com       |  4 | family  |                  |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |  5 | college |                  |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+----+---------+------------------+
+5 rows in set (0.00 sec
+
+mysql> select type, count(firstname) from addressbook group by type;
++---------+------------------+
+| type    | count(firstname) |
++---------+------------------+
+| college |                1 |
+| family  |                2 |
+| friend  |                1 |
+| school  |                1 |
++---------+------------------+
+4 rows in set (0.01 sec)
+
+mysql> select * from addressbook;
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+----+---------+------------------+
+| firstname | lastname | address           | city     | state      | zipcode | phonenumber | email                    | id | type    | addressbook_name |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+----+---------+------------------+
+| Akash     | Rajput   | Skyline Apartment | Pune     | Maharastra |  412307 |   879344781 | akashshevgan11@gmail.com |  1 | friend  | contact 1        |
+| Dinesh    | Singh    | N12 KP Road       | Amritsar | Panjab     |  307456 |   901187142 | Dinesh@gmail.com         |  2 | school  | contact 2        |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |  3 | family  | contact 3        |
+| Yogesh    | Shevgan  | Akoliwadgaon      | Gangapur | Maharastra |  423701 |   901165307 | Yogesh44@gmail.com       |  4 | family  | contact 4        |
+| Sachin    | Rajput   | vishal nagar      | Vaijapur | Maharastra |  412307 |   758804372 | sachin@gmail.com         |  5 | college | contact 5        |
++-----------+----------+-------------------+----------+------------+---------+-------------+--------------------------+----+---------+------------------+
+5 rows in set (0.00 sec)
+
