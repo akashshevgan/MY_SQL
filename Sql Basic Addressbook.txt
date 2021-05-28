@@ -320,7 +320,116 @@ mysql> describe addressbook2;
 +-----------------+-------------+------+-----+---------+-------+
 3 rows in set (0.00 sec)
 
-mysql> select *from addressbook2;
-Empty set (0.00 sec)
+----------------------------------------------------------------------------------------------------------------------------------------
 
-mysql>
+
+
+
+
+mysql> select * from address;
++----------+-------------------+-----------+------------+---------+
+| personid | personAddress     | city      | state      | zipcode |
++----------+-------------------+-----------+------------+---------+
+|        1 | Skyline Apartment | pune      | maharastra |  412307 |
+|        2 | Sk4 hadco         | Aurangabd | panjab     |   66880 |
+|        3 | Magarpatta        | Gaziyabad | up         |   66880 |
+|        4 | baga beach        | panji     | Goa        |   43567 |
++----------+-------------------+-----------+------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> describe addressbook2;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| personid        | int(11)     | YES  | MUL | NULL    |       |
+| type            | varchar(50) | NO   |     | NULL    |       |
+| addressbookname | varchar(50) | NO   |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into address addressbook2 values
+    -> (1, 'College', 'Contact1');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'addressbook2 values
+(1, 'College', 'Contact1')' at line 1
+mysql> insert into address addressbook2 values
+    -> (1, 'College', 'Contact1');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'addressbook2 values
+(1, 'College', 'Contact1')' at line 1
+mysql> insert into addressbook2 values
+    -> (1, 'College', 'Contact1');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into addressbook2 values
+    -> (2, 'Friend', 'Contact2');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into addressbook2 values
+    -> (3, 'Family', 'Contact3');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into addressbook2 values
+    -> (4, 'Family', 'Contact4');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from addressbook2;
++----------+---------+-----------------+
+| personid | type    | addressbookname |
++----------+---------+-----------------+
+|        1 | College | Contact1        |
+|        2 | Friend  | Contact2        |
+|        3 | Family  | Contact3        |
+|        4 | Family  | Contact4        |
++----------+---------+-----------------+
+4 rows in set (0.00 sec)
+
+mysql> select firstname,lastname,city
+    -> from address inner join people
+    -> on address.personid = people.personid
+    -> where city = 'pune';
++-----------+----------+------+
+| firstname | lastname | city |
++-----------+----------+------+
+| Akash     | Shevgan  | pune |
++-----------+----------+------+
+1 row in set (0.01 sec)
+
+mysql> select firstname,lastname,state
+    -> from address inner join people
+    -> on address.personid = people.personid
+    -> where state = 'up';
++-----------+----------+-------+
+| firstname | lastname | state |
++-----------+----------+-------+
+| Sachin    | Rajput   | up    |
++-----------+----------+-------+
+1 row in set (0.00 sec)
+
+mysql> select count city
+    -> from address inner join people
+    -> on address.personid = people.personid
+    -> where city = 'pune'
+    -> group by city;
+ERROR 1054 (42S22): Unknown column 'count' in 'field list'
+mysql> select count(city), city
+    -> from address inner join people
+    -> on address.personid = people.personid
+    -> where city = 'pune'
+    -> group by city;
++-------------+------+
+| count(city) | city |
++-------------+------+
+|           1 | pune |
++-------------+------+
+1 row in set (0.01 sec)
+
+mysql> select count(state),state
+    -> from address inner join people
+    -> on address.personid = people.personid
+    -> where state = 'maharastra'
+    -> group by state;
++--------------+------------+
+| count(state) | state      |
++--------------+------------+
+|            1 | maharastra |
++--------------+------------+
+1 row in set (0.00 sec)
